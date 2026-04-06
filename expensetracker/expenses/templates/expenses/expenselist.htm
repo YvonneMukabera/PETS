@@ -34,21 +34,12 @@
         {% endfor %}
     </tbody>
     <tfoot>
-        <tr>
-            <td colspan="2"><strong>Total</strong></td>
-            <td>
-                <strong>
-                    {% with total=0 %}
-                        {% for expense in expenses %}
-                            {% with total=total|add:expense.amount %}{% endwith %}
-                        {% endfor %}
-                        {{ total }}
-                    {% endwith %}
-                </strong>
-            </td>
-            <td></td>
-        </tr>
-    </tfoot>
+    <tr>
+        <td colspan="2"><strong>Total</strong></td>
+        <td><strong>{{ total }}</strong></td>
+        <td></td>
+    </tr>
+</tfoot>
 </table>
 <button class="add-expense-btn">Add New Expense</button>
 <!-- <script src="{% static 'expenses/script.js' %}"></script> -->
