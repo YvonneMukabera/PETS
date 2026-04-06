@@ -1,16 +1,56 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Expense List</title>
+    <meta charset="UTF-8">
+    <title>My Expenses</title>
+    <link rel="stylesheet" href="{% static 'expenses/style.css' %}">
 </head>
 <body>
-    <h1>My Expenses</h1>
-    <ul>
+
+<h1>My Expenses</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Expense Name</th>
+            <th>Amount (USD)</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for expense in expenses %}
-            <li>{{ expense.date }} - {{ expense.title }} : ${{ expense.amount }}</li>
+        <tr data-id="{{ expense.id }}" data-name="{{ expense.title }}" data-amount="{{ expense.amount }}" data-date="{{ expense.date }}">
+            <td>{{ expense.id }}</td>
+            <td>{{ expense.title }}</td>
+            <td>{{ expense.amount }}</td>
+            <td>{{ expense.date }}</td>
+        </tr>
         {% empty %}
-            <li>No expenses yet.</li>
+        <tr>
+            <td colspan="4">No expenses added yet.</td>
+        </tr>
         {% endfor %}
-    </ul>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2"><strong>Total</strong></td>
+            <td>
+                <strong>
+                    {% with total=0 %}
+                        {% for expense in expenses %}
+                            {% with total=total|add:expense.amount %}{% endwith %}
+                        {% endfor %}
+                        {{ total }}
+                    {% endwith %}
+                </strong>
+            </td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+<button class="add-expense-btn">Add New Expense</button>
+<!-- <script src="{% static 'expenses/script.js' %}"></script> -->
 </body>
 </html>
